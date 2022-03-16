@@ -26,7 +26,16 @@ public class Report {
 					rank[i]=1;
 				}
 				
-				//for(int i=0; )
+				for(int i=0; i<rank.length;i++) {
+					for(int j=i+1;j<rank.length;j++) {
+						if(student[j]!=null && student[i].getSum() > student[j].getSum()) {
+							rank[j]++;
+						}
+						else if(student[j]!=null && student[i].getSum() < student[j].getSum()) {
+							rank[i]++;
+						}
+					}
+				}
 				
 				for(int i=0;i<student.length;i++) {
 					if(student[i]!=null) {
@@ -40,28 +49,37 @@ public class Report {
 				int ch=scanner.nextInt();
 				
 				if(ch==1) {
+					boolean duplicatedNumber = false;
 					System.out.print("번호 : ");
 					int num = scanner.nextInt();
-					System.out.print("이름 : ");
-					String name = scanner.next();
-					System.out.print("국어점수 : ");
-					int kor = scanner.nextInt();
-					System.out.print("영어점수 : ");
-					int eng = scanner.nextInt();
-					System.out.print("수학점수 : ");
-					int math = scanner.nextInt();
-					int sum = kor+eng+math;
-					double avg = (kor+eng+math)/3.0;
-					Student newstudent = new Student(num, name, kor, eng, math, sum, avg);
-					int i=0;
-					for(Student tmp : student) {
-						if(tmp==null) {
-							student[i]=newstudent;
-							break;
-						}
-						i++;
-					}
 					
+					for(Student tmp: student) {
+						if(tmp!=null && tmp.getNum()==num) {
+							duplicatedNumber=true;
+							System.out.println("중복된 번호입니다. 다른 번호를 누르세요.");
+						}
+					}
+					if(duplicatedNumber==false) {
+						System.out.print("이름 : ");
+						String name = scanner.next();
+						System.out.print("국어점수 : ");
+						int kor = scanner.nextInt();
+						System.out.print("영어점수 : ");
+						int eng = scanner.nextInt();
+						System.out.print("수학점수 : ");
+						int math = scanner.nextInt();
+						int sum = kor+eng+math;
+						double avg = (kor+eng+math)/3.0;
+						Student newstudent = new Student(num, name, kor, eng, math, sum, avg);
+						int i=0;
+						for(Student tmp : student) {
+							if(tmp==null) {
+								student[i]=newstudent;
+								break;
+							}
+							i++;
+						}
+					}
 					
 				}
 				else if(ch==2) {
