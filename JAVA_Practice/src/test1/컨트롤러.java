@@ -36,7 +36,7 @@ public class 컨트롤러 {
 		String 찾을달 = 월+"월";	
 		
 		for(매출 tmp : 총매출저장리스트) {	
-			if(총매출저장리스트.contains(찾을연도) && 총매출저장리스트.contains(찾을달)) {	
+			if(tmp.get연도().equals(찾을연도) && tmp.get월().equals(찾을달)) {	
 				매출 임시객체 = new 매출(tmp.get매출금액(), tmp.get날짜());
 				일일매출.add(임시객체);
 			}
@@ -59,7 +59,6 @@ public class 컨트롤러 {
 					매출 매출 = new 매출(Integer.parseInt(임시배열[0]), 임시배열[1], 임시배열[2], 임시배열[3]);
 					총매출저장리스트.add(매출);	// 총매출저장리스트 리스트에 저장.
 			}
-			테스트용일괄출력();
 		} catch (Exception e) { }
 	}	// 매출파일로딩 메서드 END
 	
