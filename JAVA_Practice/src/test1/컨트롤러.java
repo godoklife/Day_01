@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 
@@ -33,17 +34,15 @@ public class 컨트롤러 {
 		String 찾을연도 = 연도+"년";	
 		String 찾을달 = 월+"월";	
 		
-		for(매출 tmp : 총매출저장리스트) {	
-			// 모든 날짜의 매출금액이 있는 총매출저장리스트에서 입력받은 연, 월의 매출만 쭉 빼와서 일일매출 리스트에 금액과 날짜 저장
+		for(매출 tmp : 총매출저장리스트) {	// 모든 날짜의 매출금액이 있는 총매출저장리스트에서 입력받은 연, 월의 매출만 쭉 빼와서 일일매출 리스트에 금액과 날짜 저장
 			if(tmp.get연도().contains(찾을연도) && tmp.get월().contains(찾을달)) {	
 				매출 임시객체 = new 매출(tmp.get매출금액(), tmp.get날짜());
 				일일매출.add(임시객체);
 			}
 		}
-		System.out.println();
-		for(int i=0; i<일일매출.size(); i++) {
-			
-			String tmp="";	// null 넣으면 널포인터에러때문에 그냥 공백으로 초기화
+		
+		for(int i=0; i<일일매출.size(); i++) {	// 윗쪽 반복문에서 만든 일일매출 리스트에서 같은 날짜는 한곳에 더한뒤, 나머지는 0원 처리함.
+			String tmp;
 			int 임시매출누적=0;
 			tmp = 일일매출.get(i).get날짜();
 			for(int j=i; j<일일매출.size(); j++) {
@@ -55,13 +54,14 @@ public class 컨트롤러 {
 			일일매출.get(i).set매출금액(임시매출누적);
 		}
 		
-		for(int i=0; i<일일매출.size(); i++){	// 메인 클래스로 리턴할 검색결과 리스트에서 매출금액이 0원인 인덱스 제거 반복문
-			if(일일매출.get(일일매출.size()-1).get매출금액()==0) {	// 일일매출의 가장 끝 인덱스부터 0원인지 확인
-				일일매출.remove(일일매출.size()-1);
+		for(int i=0; i<일일매출.size(); i++){	// 0원 처리된 인덱스들 삭제하는 반복문
+			if(일일매출.get(i).get매출금액()==0) {	// 일일매출의 가장 끝 인덱스부터 0원인지 확인
+				일일매출.remove(i);
+				i-=1;	// 현재 인덱스 뒤의 값이 자동으로 떙겨지기 때문에 떙겨진 값이 0인지 다시한번 확인해야함. 같은인덱스 다시한번 검사하기 위해 i= -1
 			}
 		}
 		
-		일일매출.remove(일일매출.size()-1);	// 왜인지 모르겠는데 0원인 인덱스가 하나씩 남은. 삭제하는 라인. 왜 남는지 확인필요
+		
 		return 일일매출;
 	}
 	
@@ -69,7 +69,7 @@ public class 컨트롤러 {
 	public void 매출파일로딩() {
 		try {	// FileInputStream 때문에 일반예외 발생
 			FileInputStream fileInputStream = new FileInputStream("D:/java/주차장매출.txt");
-			byte[] 임시바이트배열 = new byte[4096];	// 넉넉하게 4KB짜리 임시저장용 바이트형 배열 선언
+			byte[] 임시바이트배열 = new byte[32768];	// 넉넉하게 32KB짜리 임시저장용 바이트형 배열 선언
 			fileInputStream.read(임시바이트배열);	// 주차장매출.txt 파일 읽어들인 다음 바이트형 배열에 저장
 			String 파일내용 = new String(임시바이트배열);	// 바이트배열-> 문자열로 이동
 			
