@@ -24,10 +24,10 @@ public class 매출_컨트롤러_main {
 				int month = scanner.nextInt();
 				ArrayList<매출> 검색결과출력용리스트 =  new ArrayList<>(메인컨트롤러.매출출력(year, month));
 				for(int i=0; i<검색결과출력용리스트.size(); i++) {
-					System.out.println(검색결과출력용리스트.get(i).get매출금액()+"원");
+					System.out.printf("%d년 %2d월 %s일 매출 : %s원\n", year, month, 검색결과출력용리스트.get(i).get날짜(), 검색결과출력용리스트.get(i).get매출금액());
+//					System.out.println(검색결과출력용리스트.get(i).get매출금액()+"원");
 				}
 			}
-
 			
 		}
 	}
