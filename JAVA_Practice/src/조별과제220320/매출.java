@@ -1,4 +1,4 @@
-package test1;
+package 조별과제220320;
 
 public class 매출 {
 	// 1. 필드
