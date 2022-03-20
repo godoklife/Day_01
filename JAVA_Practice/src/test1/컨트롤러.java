@@ -6,10 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+
 public class 컨트롤러 {
- 
-	
-	
 	
 	public static ArrayList<매출> 총매출저장리스트 = new ArrayList<>();
 	
@@ -29,18 +27,41 @@ public class 컨트롤러 {
 	}
 	
 	// 콘솔에서 입력받은 연도와 월을 바탕으로 일일 매출내역을 ArrayList로 리턴
-	public ArrayList<매출> 매출출력(int 연도, int 월) {	
+	public static ArrayList<매출> 매출출력(int 연도, int 월) {	
 		ArrayList<매출> 일일매출 = new ArrayList<>();
 		
 		String 찾을연도 = 연도+"년";	
 		String 찾을달 = 월+"월";	
 		
 		for(매출 tmp : 총매출저장리스트) {	
-			if(tmp.get연도().equals(찾을연도) && tmp.get월().equals(찾을달)) {	
+			// 모든 날짜의 매출금액이 있는 총매출저장리스트에서 입력받은 연, 월의 매출만 쭉 빼와서 일일매출 리스트에 금액과 날짜 저장
+			if(tmp.get연도().contains(찾을연도) && tmp.get월().contains(찾을달)) {	
 				매출 임시객체 = new 매출(tmp.get매출금액(), tmp.get날짜());
 				일일매출.add(임시객체);
 			}
 		}
+		System.out.println();
+		for(int i=0; i<일일매출.size(); i++) {
+			
+			String tmp="";	// null 넣으면 널포인터에러때문에 그냥 공백으로 초기화
+			int 임시매출누적=0;
+			tmp = 일일매출.get(i).get날짜();
+			for(int j=i; j<일일매출.size(); j++) {
+				if(tmp.equals(일일매출.get(j).get날짜())) {
+					임시매출누적 += 일일매출.get(j).get매출금액();
+					일일매출.get(j).set매출금액(0);
+				}
+			}
+			일일매출.get(i).set매출금액(임시매출누적);
+		}
+		
+		for(int i=0; i<일일매출.size(); i++){	// 메인 클래스로 리턴할 검색결과 리스트에서 매출금액이 0원인 인덱스 제거 반복문
+			if(일일매출.get(일일매출.size()-1).get매출금액()==0) {	// 일일매출의 가장 끝 인덱스부터 0원인지 확인
+				일일매출.remove(일일매출.size()-1);
+			}
+		}
+		
+		일일매출.remove(일일매출.size()-1);	// 왜인지 모르겠는데 0원인 인덱스가 하나씩 남은. 삭제하는 라인. 왜 남는지 확인필요
 		return 일일매출;
 	}
 	
