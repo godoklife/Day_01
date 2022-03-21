@@ -3,7 +3,7 @@ package 조별과제220320;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class 매출_컨트롤러_main {
+public class 메인 {
 	public static void main(String[] args) {
 		컨트롤러 메인컨트롤러 = new 컨트롤러();
 		
@@ -18,8 +18,8 @@ public class 매출_컨트롤러_main {
 		Scanner scanner = new Scanner(System.in);
 		메인컨트롤러.매출파일로딩();
 		메인컨트롤러.테스트용일괄출력();	// 테스트용 메서드
-		for(int i=0; i<2000; i++)
-			메인컨트롤러.노가다귀찮다();	// 테스트용 매출액 랜덤생성 메서드
+		for(int i=0; i<200; i++)	// 테스트용 매출액 파일 랜덤생성
+			메인컨트롤러.노가다귀찮다();	
 		
 		while(true) {
 			System.out.println("1. 주차장정산금액 입력 | 2. 검색");
@@ -35,7 +35,7 @@ public class 매출_컨트롤러_main {
 			
 			else if(ch==2) {	
 				boolean isInputRight = true;	// 사용자가 예상한대로 값을 입력했는지 기록하는 플래그. true : 정상실행
-				System.out.println("검색할 연도를 정수로 입력하세요.\n입력예시) 2022년 : 22\n입력 >");
+				System.out.printf("검색할 연도를 정수로 입력하세요.\n입력예시) 2022년 : 22\n입력가능연도 : 20~22\n입력 >");
 				int year = scanner.nextInt();
 				System.out.printf("%2d년에서 검색할 달을 정수로 입력하세요.\n입력예시)03월 : 3\n입력 >",year);
 				int month = scanner.nextInt();
@@ -49,8 +49,8 @@ public class 매출_컨트롤러_main {
 				}else if(month<1 || month>12) {	// 검색 달을 1~12월 밖으로 입력하면
 					System.out.println("제발 1월에서 12월까지만 넣어주세요...");
 					isInputRight=false;
-				}else if(year<00 || year>22) {
-					System.out.println("입력년도를 확인하세요.\n입력가능연도 : 00~22년");
+				}else if(year<20 || year>22) {
+					System.out.println("입력년도를 확인하세요.\n입력가능연도 : 20~22년");
 					isInputRight=false;
 				}
 				

@@ -103,7 +103,7 @@ public class 컨트롤러 {
 	// txt파일에서 java로 읽어들이는 메서드
 	public void 매출파일로딩() {
 		try {	// FileInputStream 때문에 일반예외 발생
-			FileInputStream fileInputStream = new FileInputStream("D:/java/주차장매출.txt");
+			FileInputStream fileInputStream = new FileInputStream("c:/java/주차장매출.txt");
 			byte[] 임시바이트배열 = new byte[65536];	// 넉넉하게 32KB짜리 임시저장용 바이트형 배열 선언
 			fileInputStream.read(임시바이트배열);	// 주차장매출.txt 파일 읽어들인 다음 바이트형 배열에 저장
 			String 파일내용 = new String(임시바이트배열);	// 바이트배열-> 문자열로 이동
@@ -121,7 +121,7 @@ public class 컨트롤러 {
 	// java에서 txt파일로 내보내는 메서드
 	public void 매출파일저장() {
 		try {
-			FileOutputStream fileOutputStream = new FileOutputStream("D:/java/주차장매출.txt");	// 1. 파일 출력 객체 생성
+			FileOutputStream fileOutputStream = new FileOutputStream("c:/java/주차장매출.txt");	// 1. 파일 출력 객체 생성
 			for(매출 tmp : 총매출저장리스트) {
 				String 저장파일에들어갈문자열 = tmp.get매출금액() + "," + tmp.get날짜() + "," + tmp.get월() + "," + tmp.get연도() + "\n";
 				fileOutputStream.write(저장파일에들어갈문자열.getBytes());
@@ -139,7 +139,7 @@ public class 컨트롤러 {
 		Random random = new Random();
 		int 매출금액 = random.nextInt(4001)+1000;	// 1000~5000
 		float 매출금액2 = Math.round(매출금액/100.0)*100.0f;
-		int year = random.nextInt(23);			// 00~22
+		int year = random.nextInt(3)+20;			// 20~22
 		int month = random.nextInt(12)+1;		// 1~12
 		int day = 0;
 		
