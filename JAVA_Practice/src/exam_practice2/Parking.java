@@ -1,6 +1,7 @@
 package exam_practice2;
 
-import java.util.Calendar;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class Parking {
 	
@@ -8,57 +9,53 @@ public class Parking {
 	
 	// 1. 필드
 	private String carNum;
-	private String inTime;
-	private String outTime;
-	private Calendar calendar = Calendar.getInstance();
-	
+	private LocalDate date;
+	private LocalTime intime;
+	private LocalTime outtime;
+	private int pay;
 	// 2. 생성자
+	public Parking(String carNum, LocalDate date, LocalTime intime, LocalTime outtime, int pay) {
+		super();
+		this.carNum = carNum;
+		this.date = date;
+		this.intime = intime;
+		this.outtime = outtime;
+		this.pay = pay;
+	}
 	public Parking() {
 		// TODO Auto-generated constructor stub
 	}
-
-	public Parking(String carNum, String inTime, String outTime) {
-		this.carNum = carNum;
-		this.inTime = inTime;
-		this.outTime = outTime;
-	}
-
-	// 3. 메서드
+	
 	public String getCarNum() {
 		return carNum;
 	}
-
 	public void setCarNum(String carNum) {
 		this.carNum = carNum;
 	}
-
-	public String getInTime() {
-		return inTime;
+	public LocalDate getDate() {
+		return date;
 	}
-
-	public void setInTime(String inTime) {
-		this.inTime = inTime;
+	public void setDate(LocalDate date) {
+		this.date = date;
 	}
-
-	public String getOutTime() {
-		return outTime;
+	public LocalTime getIntime() {
+		return intime;
 	}
-
-	public void setOutTime(String outTime) {
-		this.outTime = outTime;
+	public void setIntime(LocalTime intime) {
+		this.intime = intime;
 	}
-
-	public Calendar getCalendar() {
-		return calendar;
+	public LocalTime getOuttime() {
+		return outtime;
 	}
-
-	public void setCalendar(Calendar calendar) {
-		this.calendar = calendar;
+	public void setOuttime(LocalTime outtime) {
+		this.outtime = outtime;
 	}
-	
-	
-	
-	
+	public int getPay() {
+		return pay;
+	}
+	public void setPay(int pay) {
+		this.pay = pay;
+	}
 	
 	
 }
