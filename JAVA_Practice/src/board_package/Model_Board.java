@@ -1,7 +1,5 @@
 package board_package;
 
-import java.time.LocalDateTime;
-
 public class Model_Board {
 	
 	// 1. ÇÊµå
@@ -9,17 +7,17 @@ public class Model_Board {
 	private String pw;
 	private String title;
 	private int num;
-	private String viewcount;
+	private int viewcount;
 	private String contents;
-	private LocalDateTime submitDateTime;
+	private String submitDateTime;
 	
 	
 	public Model_Board() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Model_Board(String id, String pw, String title, int num, String viewcount, String contents,
-			LocalDateTime submitDateTime) {
+	public Model_Board(String id, String pw, String title, int num, int viewcount, String contents,
+			String submitDateTime) {
 		super();
 		this.id = id;
 		this.pw = pw;
@@ -62,11 +60,11 @@ public class Model_Board {
 		this.num = num;
 	}
 
-	public String getViewcount() {
+	public int getViewcount() {
 		return viewcount;
 	}
 
-	public void setViewcount(String viewcount) {
+	public void setViewcount(int viewcount) {
 		this.viewcount = viewcount;
 	}
 
@@ -78,11 +76,11 @@ public class Model_Board {
 		this.contents = contents;
 	}
 
-	public LocalDateTime getSubmitDateTime() {
+	public String getSubmitDateTime() {
 		return submitDateTime;
 	}
 
-	public void setSubmitDateTime(LocalDateTime submitDateTime) {
+	public void setSubmitDateTime(String submitDateTime) {
 		this.submitDateTime = submitDateTime;
 	}
 }

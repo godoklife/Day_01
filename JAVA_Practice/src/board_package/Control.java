@@ -1,5 +1,7 @@
 package board_package;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -8,6 +10,9 @@ public class Control {
 	ArrayList<Model_Member> model_Members = new ArrayList<>();
 	ArrayList<Model_Board>model_Boards = new ArrayList<>();
 	LinkedList<Model_Reply>model_Replies = new LinkedList<>();
+	LocalDateTime ldt = LocalDateTime.now();
+	DateTimeFormatter yearFormat = DateTimeFormatter.ofPattern("MM.dd");
+	int 글번호카운트=0;
 	
 	// 1. 회원가입
 	public byte join (String id, String pw) {
@@ -40,15 +45,17 @@ public class Control {
 	
 	// 2. 로그인
 	public boolean login (String id, String pw) {
-		boolean flag=false;
 		for(Model_Member tmp : model_Members) {
 			if(tmp.getId().equals(id) && tmp.getPw().equals(pw))
-				flag=true;
+				return true;
 		}
 		return false;
 	}
 	
 	// 3. 글쓰기
-	
+	public void write(String id, String pw, String title, String content) {
+		글번호카운트++;
+		model_Boards.add(new Model_Board(id, pw, title, 글번호카운트, 0, content, ldt.format(yearFormat)));
+	}
 	
 }	// c e

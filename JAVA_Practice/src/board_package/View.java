@@ -46,10 +46,36 @@ public class View {
 				
 				if(loginResult) {	// 로그인 성공시 게시판으로 진입
 					System.out.println(id+" 님 환영합니다.");
-					System.out.println("======================================================");
-					System.out.printf("%04d\t\s\t\s\t\s\t\s",con.model_Boards.g);
-					
-					
+					while(true)	{// 게시판 매뉴 무한반복, 종료 조건 : 4번, 로그아웃
+						System.out.println("======================================================");
+						System.out.printf("%s\t%s\t\t%s\t\t%s\t%s\n","번호", "글쓴이", "제목", "등록일", "조회수");
+						for(Model_Board tmp : con.model_Boards) {
+							System.out.printf("%03d\t%s\t%s\t\t%s\t%s\n",tmp.getNum(), tmp.getId(), tmp.getTitle(),
+									tmp.getSubmitDateTime(), tmp.getViewcount());
+						}
+						System.out.println("======================================================");
+						System.out.println("1. 글쓰기 | 2. 글 읽기 | 3. 글 검색 | 4. 로그아웃" );
+						System.out.print("선택 >");
+						String ch2=scanner.next();
+						
+						if(ch2.equals("1")) {
+							System.out.print("제목 : ");
+							String newTitle = scanner.next();
+							System.out.print("내용 : ");
+							String newContent = scanner.next();
+							con.write(id, pw, newTitle, newContent);
+							
+							
+						}else if(ch2.equals("2")) {
+							System.out.println();
+							
+						}else if(ch2.equals("3")) {
+							
+						}else if(ch2.equals("4")) {
+							System.out.println("로그아웃 합니다.");
+							break;
+						}else System.out.println("잘못 누르셨습니다.");
+					}	// w e
 					
 				}else System.out.println("아이디와 비밀번호를 확인하세요.");
 				
