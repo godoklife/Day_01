@@ -55,6 +55,7 @@ public class Control {
 				String stringToSave = tmp.getId()+","+tmp.getPw()+","+tmp.getTitle()+","+tmp.getNum()+","+
 				tmp.getViewcount()+","+tmp.getContents()+","+tmp.getSubmitDateTime()+"\n";
 				fileOutputStream.write(stringToSave.getBytes());
+				
 			}
 		} catch (Exception e) {}
 	}
@@ -127,6 +128,17 @@ public class Control {
 		글번호카운트++;
 		model_Boards.add(new Model_Board(id, pw, title, 글번호카운트, 0, content, ldt.format(yearFormat)));
 		boardSave();
+	}
+	
+	// 4. 글읽기
+	public Model_Board read(String num) {
+		for(Model_Board tmp : model_Boards) {
+			if(tmp.getNum()==Integer.parseInt(num)) {
+//				return tmp;
+				
+			}
+		}
+		return null;
 	}
 	
 }	// c e

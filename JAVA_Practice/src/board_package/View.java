@@ -75,7 +75,9 @@ public class View {
 							System.out.println("글 번호를 선택하세요.");
 							System.out.print("선택 >");
 							String ch3=scanner.next();
-//							for()
+	//						Model_Board readResult = con.read(ch3);	// 모델보드 클래스 쓰지 말고
+							
+							
 						}else if(ch2.equals("3")) {
 							
 						}else if(ch2.equals("4")) {
