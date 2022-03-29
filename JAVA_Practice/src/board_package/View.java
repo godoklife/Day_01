@@ -47,6 +47,7 @@ public class View {
 				if(loginResult) {	// 로그인 성공시 게시판으로 진입
 					System.out.println(id+" 님 환영합니다.");
 					while(true)	{// 게시판 매뉴 무한반복, 종료 조건 : 4번, 로그아웃
+						System.out.println();
 						System.out.println("======================================================");
 						System.out.printf("%s\t%s\t\t%s\t\t%s\t%s\n","번호", "글쓴이", "제목", "등록일", "조회수");
 						for(Model_Board tmp : con.model_Boards) {
@@ -58,7 +59,7 @@ public class View {
 						System.out.print("선택 >");
 						String ch2=scanner.next();
 						
-						if(ch2.equals("1")) {
+						if(ch2.equals("1")) {	// 글 쓰기
 							System.out.print("제목 : ");
 							String newTitle = scanner.next();
 							System.out.print("내용 : ");
@@ -66,9 +67,11 @@ public class View {
 							con.write(id, pw, newTitle, newContent);
 							
 							
-						}else if(ch2.equals("2")) {
-							System.out.println();
-							
+						}else if(ch2.equals("2")) {	// 글 읽기
+							System.out.println("글 번호를 선택하세요.");
+							System.out.print("선택 >");
+							String ch3=scanner.next();
+//							for()
 						}else if(ch2.equals("3")) {
 							
 						}else if(ch2.equals("4")) {

@@ -1,5 +1,7 @@
 package board_package;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -12,8 +14,73 @@ public class Control {
 	LinkedList<Model_Reply>model_Replies = new LinkedList<>();
 	LocalDateTime ldt = LocalDateTime.now();
 	DateTimeFormatter yearFormat = DateTimeFormatter.ofPattern("MM.dd");
+	// 필드
 	int 글번호카운트=0;
+//	boolean 맴버로딩=false;
 	
+	
+	
+	// 1-1 계정 정보 저장
+	public void memberSave() {
+		try {
+			FileOutputStream fileOutputStream = new FileOutputStream("D:/java/계정.txt");
+			for(Model_Member tmp : model_Members) {
+				String stringToSave = tmp.getId()+"|"+tmp.getPw()+"\n";
+				fileOutputStream.write(stringToSave.getBytes());
+			}
+		} catch (Exception e) {}
+	}
+	
+	// 1-2 계정 파일 읽어들이기
+	public void memberLoad() {
+//		if (맴버로딩==true) return;	// 현 메서드가 한번이라도 실행되었으면 바로 메서드 종료
+		try {
+			FileInputStream fileInputStream = new FileInputStream("D:/java/계정.txt");
+			byte[] byteToLoad = new byte[65536];	//64KB
+			fileInputStream.read(byteToLoad);	// 계정.txt를 바이트 배열에 저장
+			String tmp = new String(byteToLoad);	// 바이트 배열을 문자열로 바꿔서 저
+			String[] tmp2 = tmp.split("\n");	// 줄 단위로 문자열 배열 단위 저장
+			
+			for(String tmp3 : tmp2) {
+				String[] tmp4 = tmp3.split("|");
+				model_Members.add(new Model_Member(tmp4[0], tmp4[1]));
+			}
+//			맴버로딩=true;	// txt파일 읽어들이는 메서드 한번만 실행되도록 하기 위함.
+					
+		} catch (Exception e) {}
+	}
+	
+	//2-1 글 파일 읽어들이기
+	public void boardSave() {
+		try {
+			FileOutputStream fileOutputStream = new FileOutputStream("D:/java/게시글.txt");
+			for(Model_Board tmp : model_Boards) {
+				String stringToSave = tmp.getId()+"|"+tmp.getPw()+tmp.getTitle()+"|"+tmp.getNum()+"|"+
+				tmp.getViewcount()+"|"+tmp.getContents()+"|"+tmp.getSubmitDateTime()+"\n";
+				fileOutputStream.write(stringToSave.getBytes());
+			}
+		} catch (Exception e) {}
+	}
+	
+	// 2-2 글 파일 읽어들이기
+	public void boardLoad() {
+//		if (맴버로딩==true) return;	// 현 메서드가 한번이라도 실행되었으면 바로 메서드 종료
+		try {
+			FileInputStream fileInputStream = new FileInputStream("D:/java/게시글.txt");
+			byte[] byteToLoad = new byte[65536];	//64KB
+			fileInputStream.read(byteToLoad);	// 계정.txt를 바이트 배열에 저장
+			String tmp = new String(byteToLoad);	// 바이트 배열을 문자열로 바꿔서 저
+			String[] tmp2 = tmp.split("\n");	// 줄 단위로 문자열 배열 단위 저장
+			
+			for(String tmp3 : tmp2) {
+				String[] tmp4 = tmp3.split("|");
+				model_Boards.add(new Model_Board(tmp4[0], tmp4[1], tmp4[2], Integer.parseInt(tmp4[3]), 
+						Integer.parseInt(tmp4[4]), tmp4[5], tmp4[6]));
+			}
+//			맴버로딩=true;	// txt파일 읽어들이는 메서드 한번만 실행되도록 하기 위함.
+					
+		} catch (Exception e) {}
+	}
 	// 1. 회원가입
 	public byte join (String id, String pw) {
 		// 아이디 조건 충족 여부 검사 시작
@@ -40,6 +107,7 @@ public class Control {
 		}
 		if (pwCheck==false) return 4;	// 비번에 숫자가 없음.
 		model_Members.add(new Model_Member(id, pw));	// 리스트 객체에 추가.
+		memberSave();	// txt파일로 내보내기
 		return 0;	// 정상적으로 가입 성공시 0 리턴
 	}	// join END
 	
