@@ -14,9 +14,7 @@ public class Control {
 	LinkedList<Model_Reply>model_Replies = new LinkedList<>();
 	LocalDateTime ldt = LocalDateTime.now();
 	DateTimeFormatter yearFormat = DateTimeFormatter.ofPattern("MM.dd");
-	// 필드
 	int 글번호카운트=0;
-//	boolean 맴버로딩=false;
 	
 	
 	
@@ -25,7 +23,7 @@ public class Control {
 		try {
 			FileOutputStream fileOutputStream = new FileOutputStream("D:/java/계정.txt");
 			for(Model_Member tmp : model_Members) {
-				String stringToSave = tmp.getId()+"|"+tmp.getPw()+"\n";
+				String stringToSave = tmp.getId()+","+tmp.getPw()+"\n";
 				fileOutputStream.write(stringToSave.getBytes());
 			}
 		} catch (Exception e) {}
@@ -33,7 +31,6 @@ public class Control {
 	
 	// 1-2 계정 파일 읽어들이기
 	public void memberLoad() {
-//		if (맴버로딩==true) return;	// 현 메서드가 한번이라도 실행되었으면 바로 메서드 종료
 		try {
 			FileInputStream fileInputStream = new FileInputStream("D:/java/계정.txt");
 			byte[] byteToLoad = new byte[65536];	//64KB
@@ -42,10 +39,10 @@ public class Control {
 			String[] tmp2 = tmp.split("\n");	// 줄 단위로 문자열 배열 단위 저장
 			
 			for(String tmp3 : tmp2) {
-				String[] tmp4 = tmp3.split("|");
+				String[] tmp4 = tmp3.split(",");
+				System.out.println(tmp4[0]+", "+tmp4[1]);
 				model_Members.add(new Model_Member(tmp4[0], tmp4[1]));
 			}
-//			맴버로딩=true;	// txt파일 읽어들이는 메서드 한번만 실행되도록 하기 위함.
 					
 		} catch (Exception e) {}
 	}
@@ -55,8 +52,8 @@ public class Control {
 		try {
 			FileOutputStream fileOutputStream = new FileOutputStream("D:/java/게시글.txt");
 			for(Model_Board tmp : model_Boards) {
-				String stringToSave = tmp.getId()+"|"+tmp.getPw()+tmp.getTitle()+"|"+tmp.getNum()+"|"+
-				tmp.getViewcount()+"|"+tmp.getContents()+"|"+tmp.getSubmitDateTime()+"\n";
+				String stringToSave = tmp.getId()+","+tmp.getPw()+","+tmp.getTitle()+","+tmp.getNum()+","+
+				tmp.getViewcount()+","+tmp.getContents()+","+tmp.getSubmitDateTime()+"\n";
 				fileOutputStream.write(stringToSave.getBytes());
 			}
 		} catch (Exception e) {}
@@ -64,7 +61,6 @@ public class Control {
 	
 	// 2-2 글 파일 읽어들이기
 	public void boardLoad() {
-//		if (맴버로딩==true) return;	// 현 메서드가 한번이라도 실행되었으면 바로 메서드 종료
 		try {
 			FileInputStream fileInputStream = new FileInputStream("D:/java/게시글.txt");
 			byte[] byteToLoad = new byte[65536];	//64KB
@@ -73,14 +69,16 @@ public class Control {
 			String[] tmp2 = tmp.split("\n");	// 줄 단위로 문자열 배열 단위 저장
 			
 			for(String tmp3 : tmp2) {
-				String[] tmp4 = tmp3.split("|");
+				String[] tmp4 = tmp3.split(",");
 				model_Boards.add(new Model_Board(tmp4[0], tmp4[1], tmp4[2], Integer.parseInt(tmp4[3]), 
 						Integer.parseInt(tmp4[4]), tmp4[5], tmp4[6]));
 			}
-//			맴버로딩=true;	// txt파일 읽어들이는 메서드 한번만 실행되도록 하기 위함.
-					
 		} catch (Exception e) {}
 	}
+	
+	// 리플은 아직 미완성.
+	
+	
 	// 1. 회원가입
 	public byte join (String id, String pw) {
 		// 아이디 조건 충족 여부 검사 시작
@@ -88,7 +86,11 @@ public class Control {
 			return 1;	// 아이디 글자수가 5자 미만이거나 16자 초과인 경우 1을 리턴
 		}
 		char[] tmp1 = new char[id.length()];	// 아이디 글자수 만큼의 길이를 가진 char 배열을 선언
-		
+		for(Model_Member tmp : model_Members) {	// 중복검사 반복문을 따로 돌려야 하나?? 시간날때 수정하자
+			if(tmp.getId().equals(id)){
+				return 5;
+			}
+		}
 		for(int i=0; i<id.length(); i++) {
 			tmp1[i]=id.charAt(i);
 			if(tmp1[i] < 0x41 || (0x5A < tmp1[i] && tmp1[i] < 0x61) || tmp1[i] > 0x7A) {
@@ -124,6 +126,7 @@ public class Control {
 	public void write(String id, String pw, String title, String content) {
 		글번호카운트++;
 		model_Boards.add(new Model_Board(id, pw, title, 글번호카운트, 0, content, ldt.format(yearFormat)));
+		boardSave();
 	}
 	
 }	// c e

@@ -6,6 +6,8 @@ public class View {
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		Control con = new Control();
+		con.memberLoad();
+		con.boardLoad();
 		while(true) {	// 종료조건 : 없음
 			System.out.println("회원제 게시판");
 			System.out.println("1. 회원가입 2. 로그인 ");
@@ -32,12 +34,14 @@ public class View {
 				 * 2 : 영문 대소문자 이외의 문자 들어감
 				 * 3 : 비번 글자수 부적합
 				 * 4 : 하나 이상의 숫자 미포함
+				 * 5 : 아이디 중복
 				 */
 				if(joinResult==0) System.out.println(newID+" 님의 가입을 환영합니다.");
 				else if(joinResult==1) System.out.println("아이디 글자수를 확인하세요");
 				else if(joinResult==2) System.out.println("아이디에는 영문만 허용됩니다.");
 				else if(joinResult==3) System.out.println("비밀번호 글자수를 확인하세요");
 				else if(joinResult==4) System.out.println("비밀번호에는 숫자가 포함되어야만 합니다.");
+				else if(joinResult==5) System.out.println("해당 아이디는 이미 있습니다.");
 				
 			}else if(ch.equals("2")) {	// 로그인 매뉴
 				System.out.println("아이디를 입력하세요"); String id = scanner.next();
